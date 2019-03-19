@@ -30,3 +30,14 @@ const dummyData = {
 export const getdummyData = () => {
     return dummyData;
 };
+
+export function getDecks() {
+    return AsyncStorage.getItem(UDACICARD_STORAGE_KEY).then(results => {
+      if (results) {
+        return JSON.parse(results);
+      } else {
+        AsyncStorage.setItem(UDACICARD_STORAGE_KEY, JSON.stringify(dummyData));
+        return dummyData;
+      }
+    });
+  }
