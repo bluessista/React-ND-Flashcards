@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, ScrollView, TouchableOpacity } from "react-native";
 import { green, white } from '../utils/colors';
 import { getDecks } from '../utils/api';
+import { AppLoading } from "expo";
 import { formatNumberOfQuestions } from '../utils/helpers';
 
 export default class DeckList extends Component {
     state = {
-        decks: {}
+        decks: {},
+        ready: false,
     };
     
     componentDidMount() {
@@ -15,14 +17,19 @@ export default class DeckList extends Component {
     }
 
     render() {
-        console.log("home:", this.state.decks)
+        const { ready, decks} = this.state;
+
+        if(!ready){
+            return <AppLoading />
+        }
+
         return (
-            <ScrollView style={styles.container} contentContainerStyle={{ alignItems: 'stretch', justifyContent: 'space-evenly' }}>
+            <ScrollView style={styles.container} contentContainerStyle={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={styles.appTitle}>Welcome to</Text>
                 <Text style={styles.appTitleMiddle}>Mobile Flashcards</Text>
                 <Text style={styles.callToAction}>Start learning now!</Text>
-            {Object.keys(this.state.decks).map(deck => {
-                const { title, questions } = this.state.decks[deck];
+            {Object.keys(decks).map(deck => {
+                const { title, questions } = decks[deck];
                 return (
                   <TouchableOpacity key={deck} style={styles.deck} onPress={() => this.props.navigation.navigate("Deck", { entryId: deck })
                   }>
@@ -41,8 +48,7 @@ export default class DeckList extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 40,
-        width: 300
+        paddingTop: 70
     },
     appTitle: {
         fontSize: 30,
@@ -59,7 +65,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'normal',
         textAlign: 'center',
-        marginBottom: 20,
+        marginBottom: 50,
         marginTop: 20
     },
     deck: {
@@ -70,16 +76,17 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: green,
         height: 140,
-        borderRadius: 5,
+        width: '100%'
       },
       deckTitle: {
-        fontSize: 28,
+        fontSize: 32,
         marginBottom: 10,
+        marginTop: 15,
         color: white,
       },
       cardNumber: {
-        fontSize: 18,
+        fontSize: 20,
         color: white,
         marginBottom: 10,
       }
-})
+});
