@@ -1,6 +1,6 @@
 # React-ND-Flashcards
 ### UdaciCards App
-An app to support users with their learning progress
+An app to support users on an iOS device with their learning progress
 
 The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes on those decks.
 
