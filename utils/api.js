@@ -33,11 +33,41 @@ export const getdummyData = () => {
 
 export function getDecks() {
     return AsyncStorage.getItem(UDACICARD_STORAGE_KEY).then(results => {
-      if (results) {
-        return JSON.parse(results);
-      } else {
-        AsyncStorage.setItem(UDACICARD_STORAGE_KEY, JSON.stringify(dummyData));
-        return dummyData;
-      }
+        if (results) {
+            return JSON.parse(results);
+        } else {
+            AsyncStorage.setItem(UDACICARD_STORAGE_KEY, JSON.stringify(dummyData));
+            return dummyData;
+        }
     });
-  }
+}
+
+export function getDeck(title) {
+    return AsyncStorage.getItem(UDACICARD_STORAGE_KEY).then(result => {
+        const data = JSON.parse(result)
+
+        return data[title]
+    });
+}
+
+export function saveDeckTitle(title) {
+    return AsyncStorage.mergeItem(
+        UDACICARD_STORAGE_KEY,
+        JSON.stringify({
+            [title]: {
+            title: title,
+            questions: []
+            }
+        })
+    );
+}
+  
+export function addCardToDeck(title, card) {
+    return AsyncStorage.getItem(UDACICARD_STORAGE_KEY)
+        .then(results => JSON.parse(results))
+        .then(results => {
+            results[title].questions.push(card);
+            AsyncStorage.setItem(UDACICARD_STORAGE_KEY, JSON.stringify(results));
+        return results;
+    });
+}
