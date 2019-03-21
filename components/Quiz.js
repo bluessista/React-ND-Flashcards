@@ -65,7 +65,7 @@ export default class Quiz extends Component {
                 <TouchableOpacity style={[styles.btnRestart, styles.btn]} onPress={this.restart}>
                     <Text style={styles.buttonText}>Start Again</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.btnBack, styles.btn]} onPress={() => this.props.navigation.navigate("Deck", { entryId: deck.title })}>
+                <TouchableOpacity style={[styles.btnBack, styles.btn]} onPress={() => this.props.navigation.navigate("Home", { entryId: deck.title })}>
                     <Text style={styles.buttonText}>Go Back</Text>
                 </TouchableOpacity>
             </View>
