@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import {gray, white, black, orange} from "../utils/colors";
 import {saveDeckTitle} from "../utils/api";
+import { StackActions } from 'react-navigation';
 
 export default class AddDeck extends Component {
     state = {
@@ -17,8 +18,12 @@ export default class AddDeck extends Component {
 
     submit = () => {
         const {deckTitle} = this.state;
+        pushAction = StackActions.push({  
+            routeName: 'Home',
+            params: {entryId: deckTitle},
+        });
 
-        saveDeckTitle(deckTitle).then(() => this.props.navigation.navigate('Deck', {entryId: deckTitle}))
+        saveDeckTitle(deckTitle).then(() => this.props.navigation.dispatch(pushAction))
         this.setState({deckTitle: ''});
     };
 
