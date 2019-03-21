@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { StyleSheet, KeyboardAvoidingView, Text, TextInput, TouchableOpacity } from "react-native";
 import { orange, gray, white, black } from "../utils/colors";
 import { addCardToDeck, getDecks } from "../utils/api";
+import { formatNumberOfQuestions } from '../utils/helpers';
+import { StackActions } from 'react-navigation';
 
 export default class AddQuestion extends Component {
     state = {
+        ready: false,
         decks: {},
         answer: '',
         question: ''
@@ -19,14 +22,21 @@ export default class AddQuestion extends Component {
         const card = {question: this.state.question, answer: this.state.answer}
 
         const title = this.props.navigation.state.params.entryId
+
+        pushAction = StackActions.push({  
+            routeName: 'Home',
+            params: {entryId: title},
+        });
+        
         addCardToDeck(title, card)
-            .then(() => this.props.navigation.navigate('Deck', { entryId: this.props.navigation.state.params.entryId }))
+            .then(() => this.props.navigation.dispatch(pushAction))
             this.setState({ question: '', answer: '' })
     };
+
   
     render() {
         const { question, answer } = this.state;
-      return (
+        return (
             <KeyboardAvoidingView style={styles.container}>
                 <Text style={styles.questionTitle}>Add a new question to your deck</Text>
                 <TextInput
