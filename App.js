@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
-import { white, green, orange } from './utils/colors';
+import { white, green, orange, gray } from './utils/colors';
 import { setDailyNotification } from './utils/helpers';
 
 // components
@@ -10,7 +10,6 @@ import AddDeck from './components/AddDeck';
 import AddQuestion from './components/AddQuestion';
 import DeckView from './components/DeckView';
 import Quiz from './components/Quiz';
-import { gray } from 'ansi-colors';
 
 const Tabs = createBottomTabNavigator({
     Home : {
@@ -28,7 +27,6 @@ const Tabs = createBottomTabNavigator({
   }, {
     tabBarOptions: {
         activeTintColor: green,
-        inactiveBackgroundColor: gray,
         labelStyle: {
             fontSize: 20,
         },
