@@ -10,7 +10,7 @@ import {
     gray,
     darkGray
 } from "../utils/colors";
-import {bold} from 'ansi-colors';
+
 
 export default class DeckView extends Component {
     state = {
@@ -21,6 +21,13 @@ export default class DeckView extends Component {
     componentDidMount() {
         getDecks().then((decks) => this.setState(() => ({ready: true, decks: decks})));
     }
+
+    componentDidUpdate(prevState) {
+        if(prevState.decks !== this.state.decks){
+            getDecks().then((decks) => this.setState(() => ({ ready: true, decks: decks})))
+        }
+    }
+
     render() {
         const decks = this.state.decks;
         const deck = decks[this.props.navigation.state.params.entryId];

@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { StyleSheet, KeyboardAvoidingView, Text, TextInput, TouchableOpacity } from "react-native";
 import { orange, gray, white, black } from "../utils/colors";
 import { addCardToDeck, getDecks } from "../utils/api";
-import { formatNumberOfQuestions } from '../utils/helpers';
+import { clearDailyNotification, setDailyNotification } from '../utils/helpers';
 import { StackActions } from 'react-navigation';
+
 
 export default class AddQuestion extends Component {
     state = {
@@ -18,19 +19,30 @@ export default class AddQuestion extends Component {
             .then((decks) => this.setState(() => ({ ready: true, decks: decks })));
     }
 
+    handleQuestionInput = (input) => {
+        this.setState({ question: input })
+    };
+
+    handleAnswerInput = (input) => {
+        this.setState({ answer: input })
+    };
+
     submit = () => {
         const card = {question: this.state.question, answer: this.state.answer}
 
         const title = this.props.navigation.state.params.entryId
 
         pushAction = StackActions.push({  
-            routeName: 'Home',
+            routeName: 'Deck',
             params: {entryId: title},
         });
         
         addCardToDeck(title, card)
             .then(() => this.props.navigation.dispatch(pushAction))
             this.setState({ question: '', answer: '' })
+
+        clearDailyNotification()
+            .then(setDailyNotification)
     };
 
   
@@ -41,13 +53,13 @@ export default class AddQuestion extends Component {
                 <Text style={styles.questionTitle}>Add a new question to your deck</Text>
                 <TextInput
                     placeholder="add your question"
-                    onChangeText={input => this.setState({ question: input })}
+                    onChangeText={this.handleQuestionInput}
                     value={question}
                     style={styles.input}
                 />
                 <TextInput
                     placeholder="add the correct answer"
-                    onChangeText={input => this.setState({ answer: input })}
+                    onChangeText={this.handleAnswerInput}
                     value={answer}
                     style={styles.input}
                 />
