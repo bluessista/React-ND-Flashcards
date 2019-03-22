@@ -3,7 +3,6 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     Text,
-    Button,
     TextInput,
     TouchableOpacity
 } from "react-native";
@@ -16,10 +15,14 @@ export default class AddDeck extends Component {
         deckTitle: ''
     };
 
+    handleTitleInput = (input) => {
+        this.setState({deckTitle: input})
+    }
+
     submit = () => {
         const {deckTitle} = this.state;
         pushAction = StackActions.push({  
-            routeName: 'Home',
+            routeName: 'Deck',
             params: {entryId: deckTitle},
         });
 
@@ -36,7 +39,7 @@ export default class AddDeck extends Component {
                 </Text>
                 <TextInput
                     style={styles.input}
-                    onChangeText={input => this.setState({deckTitle: input})}
+                    onChangeText={this.handleTitleInput}
                     value={deckTitle}
                     placeholder='enter a title here'/>
                 <TouchableOpacity
