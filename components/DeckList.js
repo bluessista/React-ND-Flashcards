@@ -16,8 +16,14 @@ export default class DeckList extends Component {
           .then((decks) => this.setState(() => ({ ready: true, decks: decks })));
     }
 
+    componentDidUpdate(prevState) {
+        if(prevState.decks !== this.state.decks){
+            getDecks().then((decks) => this.setState(() => ({ ready: true, decks: decks})))
+        }
+    }
+
     render() {
-        const { ready, decks} = this.state;
+        const { ready, decks } = this.state;
 
         if(!ready){
             return <AppLoading />
