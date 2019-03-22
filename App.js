@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { SafeAreaView } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
-import { white, green, orange, gray } from './utils/colors';
+import { white, green, black } from './utils/colors';
 import { setDailyNotification } from './utils/helpers';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // components
 import DeckList from './components/DeckList';
@@ -15,24 +16,27 @@ const Tabs = createBottomTabNavigator({
     Home : {
         screen: DeckList,
         navigationOptions: {
-            tabBarLabel: 'Home'
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ tintColor, horizontal }) => <MaterialCommunityIcons name='home' size={30} color={tintColor} />
         },
     },
     AddDeck: {
         screen: AddDeck,
         navigationOptions: {
-            tabBarLabel: 'Add Deck'
+            tabBarLabel: 'Add Deck',
+            tabBarIcon: ({ tintColor, horizontal }) => <MaterialCommunityIcons name='plus' size={30} color={tintColor} />
         },
     }
   }, {
     tabBarOptions: {
         activeTintColor: green,
         labelStyle: {
-            fontSize: 20,
+            fontSize: 20
         },
         style: {
             height: 56,
-            backgroundColor: white
+            backgroundColor: white,
+            paddingTop: 5
         }
     }
 });
@@ -53,7 +57,7 @@ const MainNavigator = createStackNavigator({
                 fontSize: 20
             },
             headerStyle: {
-                backgroundColor: 'black',
+                backgroundColor: black,
             }
         }
     },
@@ -66,7 +70,7 @@ const MainNavigator = createStackNavigator({
                 fontSize: 20
             },
             headerStyle: {
-                backgroundColor: 'black',
+                backgroundColor: black,
             }
         }
     },
@@ -79,7 +83,7 @@ const MainNavigator = createStackNavigator({
             fontSize: 20
             },
             headerStyle: {
-                backgroundColor: 'black',
+                backgroundColor: black,
             }
         }
     }
